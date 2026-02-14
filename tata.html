@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Md Saqhibuddin Ahmed | Video Editor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #1a0b2e;
+            --secondary-color: #4a1e8a;
+            --accent-color: #8a2be2;
+            --light-purple: #a855f7;
+            --text-color: #f0e6ff;
+            --card-bg: rgba(42, 15, 84, 0.7);
+        }
+
+        body {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            min-height: 100vh;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(74, 30, 138, 0.2) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(138, 43, 226, 0.2) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            padding: 30px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background-color: rgba(26, 11, 46, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(to right, #a855f7, #8a2be2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 18px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--light-purple);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--light-purple);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 100px;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3.8rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #f0e6ff, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-text h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--light-purple);
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 35px;
+            background: linear-gradient(45deg, var(--accent-color), var(--light-purple));
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(138, 43, 226, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+            z-index: -1;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(138, 43, 226, 0.5);
+        }
+
+        .hero-visual {
+            perspective: 1000px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .floating-card {
+            width: 320px;
+            height: 320px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(168, 85, 247, 0.2),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+            overflow: hidden;
+        }
+
+        .floating-card::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: conic-gradient(from 0deg, transparent, var(--light-purple), transparent);
+            animation: rotate 10s linear infinite;
+            top: -25%;
+            left: -25%;
+        }
+
+        .floating-card::after {
+            content: '';
+            position: absolute;
+            width: calc(100% - 6px);
+            height: calc(100% - 6px);
+            background: var(--card-bg);
+            border-radius: 18px;
+            top: 3px;
+            left: 3px;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 30px;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Section Styles */
+        .section-title {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80%;
+            height: 4px;
+            background: linear-gradient(to right, transparent, var(--accent-color), transparent);
+            bottom: -15px;
+            left: 10%;
+        }
+
+        section {
+            padding: 100px 0;
+        }
+
+        /* VIDEO SHOWCASE - COMPLETELY FIXED WITH YOUR VIDEO */
+        .video-showcase {
+            margin-top: 50px;
+        }
+
+        /* Container for two 9:16 videos side by side */
+        .portrait-videos-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        @media (max-width: 768px) {
+            .portrait-videos-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        /* Individual portrait video container */
+        .portrait-video-container {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(138, 43, 226, 0.2);
+        }
+
+        .portrait-video-container:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            box-shadow: 0 25px 40px rgba(138, 43, 226, 0.3);
+            border-color: var(--accent-color);
+        }
+
+        /* 9:16 Aspect Ratio Container */
+        .portrait-youtube-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 177.78%;
+            /* 9:16 Aspect Ratio (16/9=1.7778) */
+            background: #000;
+            overflow: hidden;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .portrait-youtube-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            pointer-events: none;
+        }
+
+        /* 16:9 Landscape video container */
+        .landscape-video-container {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(138, 43, 226, 0.2);
+            margin-bottom: 40px;
+        }
+
+        .landscape-video-container:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            box-shadow: 0 25px 40px rgba(138, 43, 226, 0.3);
+            border-color: var(--accent-color);
+        }
+
+        .landscape-youtube-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            /* 16:9 Aspect Ratio */
+            background: #000;
+            overflow: hidden;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .landscape-youtube-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            pointer-events: none;
+        }
+
+        /* YouTube play overlay */
+        .youtube-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            opacity: 1;
+            pointer-events: none;
+        }
+
+        .video-container-hovered .youtube-overlay {
+            opacity: 0;
+        }
+
+        .youtube-overlay i {
+            font-size: 5rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .youtube-overlay p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* Format badges */
+        .format-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(168, 85, 247, 0.2);
+            border: 1px solid var(--light-purple);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .format-badge.portrait {
+            background: rgba(138, 43, 226, 0.3);
+            border-color: var(--accent-color);
+        }
+
+        .format-badge.landscape {
+            background: rgba(74, 30, 138, 0.3);
+            border-color: var(--secondary-color);
+        }
+
+        .video-info {
+            padding: 20px;
+        }
+
+        .video-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* YouTube controls */
+        .youtube-controls {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background: rgba(26, 11, 46, 0.9);
+            border-top: 1px solid rgba(138, 43, 226, 0.3);
+            position: relative;
+            z-index: 20;
+        }
+
+        .youtube-btn {
+            background: rgba(138, 43, 226, 0.3);
+            border: 1px solid var(--accent-color);
+            color: var(--text-color);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .youtube-btn:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        /* YouTube channel section */
+        .youtube-channel-section {
+            background: rgba(42, 15, 84, 0.4);
+            border-radius: 20px;
+            padding: 60px;
+            margin-top: 50px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .youtube-channel-section::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--light-purple), transparent);
+            top: -100px;
+            right: -100px;
+            opacity: 0.3;
+            border-radius: 50%;
+        }
+
+        .youtube-channel-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .youtube-icon {
+            font-size: 8rem;
+            color: #ff0000;
+        }
+
+        .youtube-text h3 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ff0000;
+        }
+
+        .youtube-text p {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .sub-count {
+            display: inline-block;
+            padding: 10px 25px;
+            background: rgba(255, 0, 0, 0.1);
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.3rem;
+            border: 1px solid #ff0000;
+            margin-bottom: 25px;
+        }
+
+        /* Instagram Work Section */
+        .instagram-section {
+            background: rgba(42, 15, 84, 0.4);
+            border-radius: 20px;
+            padding: 60px;
+            margin-top: 50px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .instagram-section::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--light-purple), transparent);
+            top: -100px;
+            right: -100px;
+            opacity: 0.3;
+            border-radius: 50%;
+        }
+
+        .instagram-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .instagram-accounts {
+            margin-top: 30px;
+        }
+
+        .account-card {
+            background: rgba(26, 11, 46, 0.7);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .account-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+            box-shadow: 0 15px 30px rgba(138, 43, 226, 0.2);
+        }
+
+        .account-card h4 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--light-purple);
+        }
+
+        .account-card p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .insta-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--light-purple);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 20px;
+            border-radius: 30px;
+            background: rgba(138, 43, 226, 0.2);
+            border: 1px solid rgba(138, 43, 226, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .insta-link:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Graphics Design Section */
+        .graphics-section {
+            margin-top: 50px;
+        }
+
+        .graphics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .graphics-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+            position: relative;
+            height: 300px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(138, 43, 226, 0.2);
+        }
+
+        .graphics-card:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            box-shadow: 0 25px 40px rgba(138, 43, 226, 0.3);
+            border-color: var(--accent-color);
+        }
+
+        .graphics-img {
+            height: 70%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .graphics-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .graphics-card:hover .graphics-img img {
+            transform: scale(1.1);
+        }
+
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 11, 46, 0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            color: white;
+            text-align: center;
+        }
+
+        .graphics-img:hover .image-overlay {
+            opacity: 1;
+        }
+
+        .image-overlay i {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--light-purple);
+        }
+
+        .graphics-info {
+            padding: 20px;
+        }
+
+        .graphics-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        /* PDF Section */
+        .pdf-upload-section {
+            margin-top: 60px;
+            background: rgba(42, 15, 84, 0.4);
+            border-radius: 20px;
+            padding: 50px;
+            text-align: center;
+            border: 2px dashed rgba(138, 43, 226, 0.5);
+        }
+
+        .pdf-viewer-container {
+            margin: 30px 0;
+            background: rgba(26, 11, 46, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        .pdf-viewer-container iframe {
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            height: 500px;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .skill-tag {
+            padding: 10px 20px;
+            background: rgba(138, 43, 226, 0.2);
+            border-radius: 30px;
+            border: 1px solid var(--accent-color);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: var(--accent-color);
+            transform: translateY(-5px);
+        }
+
+        /* Contact Section */
+        .contact-form {
+            max-width: 700px;
+            margin: 50px auto 0;
+            background: var(--card-bg);
+            padding: 50px;
+            border-radius: 20px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(26, 11, 46, 0.7);
+            border: 1px solid rgba(138, 43, 226, 0.5);
+            border-radius: 10px;
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        .contact-item {
+            text-align: center;
+            padding: 25px;
+            background: rgba(26, 11, 46, 0.5);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+            box-shadow: 0 15px 30px rgba(138, 43, 226, 0.2);
+        }
+
+        .contact-item i {
+            font-size: 2.5rem;
+            color: var(--light-purple);
+            margin-bottom: 15px;
+        }
+
+        .contact-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--light-purple);
+        }
+
+        .contact-item a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: var(--light-purple);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(26, 11, 46, 0.9);
+            padding: 60px 0 30px;
+            border-top: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(138, 43, 226, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(138, 43, 226, 0.5);
+        }
+
+        .social-link:hover {
+            background: var(--accent-color);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(138, 43, 226, 0.2);
+            opacity: 0.7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+
+            .hero-content,
+            .about-content,
+            .instagram-content,
+            .youtube-channel-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-text h1 {
+                font-size: 3rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 90px;
+                left: 0;
+                background: rgba(26, 11, 46, 0.95);
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                padding: 30px 0;
+                gap: 30px;
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: all 0.5s ease;
+                border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+                backdrop-filter: blur(10px);
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .portrait-videos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .youtube-btn {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 10px;
+            }
+
+            .youtube-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .youtube-channel-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .contact-form,
+            .instagram-section,
+            .pdf-upload-section,
+            .youtube-channel-section {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">SAQHIB</div>
+                <div class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="nav-links" id="navLinks">
+                    <a href="#home">Home</a>
+                    <a href="#videos">Video Work</a>
+                    <a href="#instagram">Instagram Work</a>
+                    <a href="#graphics">Graphics Design</a>
+                    <a href="#about">About</a>
+                    <a href="#youtube">YouTube</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Md Saqhibuddin Ahmed</h1>
+                    <h2>Professional Video Editor & Graphic Designer</h2>
+                    <p>Creating visually stunning and engaging video content with a passion for storytelling.
+                        Specializing in football content editing with cinematic effects, smooth transitions, and dynamic
+                        pacing to captivate audiences.</p>
+                    <a href="#videos" class="cta-button">View My Work</a>
+                </div>
+                <div class="hero-visual">
+                    <div class="floating-card" id="floatingCard">
+                        <div class="card-content">
+                            <h3
+                                style="font-size: 2.5rem; margin-bottom: 10px; background: linear-gradient(to right, #f0e6ff, #a855f7); -webkit-background-clip: text; background-clip: text; color: transparent;">
+                                Video Editor</h3>
+                            <p style="font-size: 1.2rem; opacity: 0.9;">Cinematic & Engaging Content</p>
+                            <div style="margin-top: 20px; font-size: 3rem;">
+                                <i class="fas fa-film"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Showcase Section - WITH YOUR ACTUAL VIDEO -->
+    <section id="videos">
+        <div class="container">
+            <h2 class="section-title">My Video Work</h2>
+            <div class="video-showcase">
+
+                <!-- TWO 9:16 VIDEOS SIDE BY SIDE (Portrait) -->
+                <div class="portrait-videos-grid">
+
+                    <!-- Portrait Video 1 (Left) -->
+                    <div class="portrait-video-container" data-video-id="YOUR_PORTRAIT_VIDEO_1">
+                        <div class="portrait-youtube-wrapper">
+                            <iframe class="youtube-iframe"
+                                src="https://www.youtube-nocookie.com/embed/abBql2-7ZLA?enablejsapi=1&rel=0&modestbranding=1&mute=1&playsinline=1"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen referrerpolicy="strict-origin-when-cross-origin"
+                                data-video-id="abBql2-7ZLA"></iframe>
+                            <div class="youtube-overlay">
+                                <i class="fab fa-youtube"></i>
+                                <p>Hover to play (muted)<br>Click button to unmute</p>
+                            </div>
+                        </div>
+                        <div class="youtube-controls">
+                            <a href="https://youtube.com/watch?v=abBql2-7ZLA" target="_blank"
+                                class="youtube-btn">
+                                <i class="fab fa-youtube"></i> Watch on YouTube
+                            </a>
+                            <button class="youtube-btn mute-btn"
+                                onclick="toggleMuteVideo('YOUR_PORTRAIT_VIDEO_1', this)">
+                                <i class="fas fa-volume-mute"></i> Unmute
+                            </button>
+                        </div>
+                        <div class="video-info">
+                            <h3>Alight Motion Work <span class="format-badge portrait">9:16
+                                    PORTRAIT</span></h3>
+                            <p>Mobile-optimized vertical video with fast cuts, trending effects, and engaging pacing for Instagram audience.</p>
+                        </div>
+                    </div>
+
+                    <!-- Portrait Video 2 (Right) -->
+                    <div class="portrait-video-container" data-video-id="YOUR_PORTRAIT_VIDEO_2">
+                        <div class="portrait-youtube-wrapper">
+                            <iframe class="youtube-iframe"
+                                src="https://www.youtube-nocookie.com/embed/hEgi-91R7mw?enablejsapi=1&rel=0&modestbranding=1&mute=1&playsinline=1"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen referrerpolicy="strict-origin-when-cross-origin"
+                                data-video-id="hEgi-91R7mw"></iframe>
+                            <div class="youtube-overlay">
+                                <i class="fab fa-youtube"></i>
+                                <p>Hover to play (muted)<br>Click button to unmute</p>
+                            </div>
+                        </div>
+                        <div class="youtube-controls">
+                            <a href="https://youtube.com/watch?v=hEgi-91R7mw" target="_blank" class="youtube-btn">
+                                <i class="fab fa-youtube"></i> Watch on YouTube
+                            </a>
+                            <button class="youtube-btn mute-btn"
+                                onclick="toggleMuteVideo('YOUR_PORTRAIT_VIDEO_2', this)">
+                                <i class="fas fa-volume-mute"></i> Unmute
+                            </button>
+                        </div>
+                        <div class="video-info">
+                            <h3>Educational Content <span class="format-badge portrait">9:16 PORTRAIT</span></h3>
+                            <p>Mobile-optimized vertical video with fast cuts, trending effects, and engaging pacing for
+                                Youtube & Instagram audience.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- TWO 16:9 VIDEOS ONE BELOW THE OTHER (Landscape) - WITH YOUR VIDEO -->
+                <!-- Landscape Video 1 - YOUR VIDEO -->
+                <div class="landscape-video-container" data-video-id="YwJvyg2O7vQ">
+                    <div class="landscape-youtube-wrapper">
+                        <iframe class="youtube-iframe"
+                            src="https://www.youtube-nocookie.com/embed/YwJvyg2O7vQ?enablejsapi=1&rel=0&modestbranding=1&mute=1&playsinline=1"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen referrerpolicy="strict-origin-when-cross-origin"
+                            data-video-id="YwJvyg2O7vQ"></iframe>
+                        <div class="youtube-overlay">
+                            <i class="fab fa-youtube"></i>
+                            <p>Hover to play (muted)<br>Click button to unmute</p>
+                        </div>
+                    </div>
+                    <div class="youtube-controls">
+                        <a href="https://youtube.com/watch?v=YwJvyg2O7vQ" target="_blank" class="youtube-btn">
+                            <i class="fab fa-youtube"></i> Watch on YouTube
+                        </a>
+                        <button class="youtube-btn mute-btn" onclick="toggleMuteVideo('YwJvyg2O7vQ', this)">
+                            <i class="fas fa-volume-mute"></i> Unmute
+                        </button>
+                    </div>
+                    <div class="video-info">
+                        <h3>City Voice Hackathon <span class="format-badge landscape">16:9 LANDSCAPE</span></h3>
+                        <p>Traditional landscape format for YouTube and web. Cinematic effects and smooth transitions
+                            </p>
+                    </div>
+                </div>
+
+                <!-- Landscape Video 2 - Add your second 16:9 video here -->
+                <div class="landscape-video-container" data-video-id="YOUR_SECOND_16_9_VIDEO">
+                    <div class="landscape-youtube-wrapper">
+                        <iframe class="youtube-iframe"
+                            src="https://www.youtube-nocookie.com/embed/bX0nxcRH22I?enablejsapi=1&rel=0&modestbranding=1&mute=1&playsinline=1"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen referrerpolicy="strict-origin-when-cross-origin"
+                            data-video-id="bX0nxcRH22I"></iframe>
+                        <div class="youtube-overlay">
+                            <i class="fab fa-youtube"></i>
+                            <p>Hover to play (muted)<br>Click button to unmute</p>
+                        </div>
+                    </div>
+                    <div class="youtube-controls">
+                        <a href="https://youtube.com/watch?v=bX0nxcRH22I" target="_blank" class="youtube-btn">
+                            <i class="fab fa-youtube"></i> Watch on YouTube
+                        </a>
+                        <button class="youtube-btn mute-btn" onclick="toggleMuteVideo('YOUR_SECOND_16_9_VIDEO', this)">
+                            <i class="fas fa-volume-mute"></i> Unmute
+                        </button>
+                    </div>
+                    <div class="video-info">
+                        <h3>Artcile highlight <span class="format-badge landscape">16:9 LANDSCAPE</span></h3>
+                        <p>Artcile Highlight Covering important points</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- YouTube Channel Section -->
+    <section id="youtube">
+        <div class="container">
+            <h2 class="section-title">My YouTube Channel</h2>
+            <div class="youtube-channel-section">
+                <div class="youtube-channel-content">
+                    <div class="youtube-icon">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <div class="youtube-text">
+                        <h3>IndianFootyFever</h3>
+                        <div class="sub-count">1,000+ Subscribers</div>
+                        <p>I run a football-focused YouTube channel where I share match analyses, player highlights,
+                            tactical breakdowns, and football news with the Indian football community.</p>
+                        <p>My channel features carefully edited content that makes complex football concepts accessible
+                            to all fans. I combine my video editing skills with my passion for football to create
+                            engaging content that educates and entertains.</p>
+                        <a href="https://www.youtube.com/@IndianFootyFever" target="_blank" class="cta-button">Visit My
+                            Channel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instagram Work Section -->
+    <section id="instagram">
+        <div class="container">
+            <h2 class="section-title">Instagram Work</h2>
+            <div class="instagram-section">
+                <div class="instagram-content">
+                    <div>
+                        <h3 style="font-size: 2.5rem; margin-bottom: 20px; color: var(--light-purple);">School Content
+                            Pages</h3>
+                        <p style="font-size: 1.2rem; line-height: 1.7; margin-bottom: 30px;">I create and manage
+                            engaging educational content for school Instagram pages, focusing on visually appealing
+                            posts that communicate effectively with students and parents.</p>
+
+                        <div class="instagram-accounts">
+                            <div class="account-card">
+                                <h4>@bvea.ghy</h4>
+                                <p>Creating educational content, school updates, event coverage, and student highlights
+                                    for BVEA Guwahati's Instagram page.</p>
+                                <a href="https://www.instagram.com/bvea.ghy/" target="_blank" class="insta-link">
+                                    <i class="fab fa-instagram"></i> Visit Page
+                                </a>
+                            </div>
+
+                            <div class="account-card">
+                                <h4>@kaziranga_english_academy</h4>
+                                <p>Managing content strategy, creating educational posts, school announcements, and
+                                    student achievements for Kaziranga English Academy.</p>
+                                <a href="https://www.instagram.com/kaziranga_english_academy/" target="_blank"
+                                    class="insta-link">
+                                    <i class="fab fa-instagram"></i> Visit Page
+                                </a>
+                            </div>
+
+                            <div class="account-card">
+                                <h4>@__saqhib__</h4>
+                                <p>My personal Instagram profile showcasing behind-the-scenes of my editing work,
+                                    personal projects, and creative process.</p>
+                                <a href="https://www.instagram.com/__saqhib__/" target="_blank" class="insta-link">
+                                    <i class="fab fa-instagram"></i> Visit My Profile
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="floating-card" style="width: 100%; height: 400px;">
+                            <div class="card-content">
+                                <h3
+                                    style="font-size: 2.5rem; margin-bottom: 10px; background: linear-gradient(to right, #f0e6ff, #a855f7); -webkit-background-clip: text; background-clip: text; color: transparent;">
+                                    Content Strategy</h3>
+                                <p style="margin-top: 20px; font-size: 1.3rem;">Creating engaging Instagram content that
+                                    educates, informs, and builds community for educational institutions.</p>
+                                <div style="margin-top: 40px; font-size: 5rem; color: #E4405F;">
+                                    <i class="fab fa-instagram"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Graphics Design Section -->
+    <section id="graphics">
+        <div class="container">
+            <h2 class="section-title">Graphics Design Work</h2>
+            <div class="graphics-section">
+                <div class="graphics-grid">
+                    <!-- Graphic 1 -->
+                    <div class="graphics-card">
+                        <div class="graphics-img">
+                            <img src="1735550787881.png" alt="Instagram Post Design"
+                                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                            <div class="image-overlay">
+                                <i class="fas fa-search-plus"></i>
+                                <span>View Full Size</span>
+                            </div>
+                        </div>
+                        <div class="graphics-info">
+                            <h3>Instagram Post Design</h3>
+                            <p>Taylor Swift Graphic</p>
+                        </div>
+                    </div>
+
+                    <!-- Graphic 2 -->
+                    <div class="graphics-card">
+                        <div class="graphics-img">
+                            <img src="neufc.png" alt="YouTube Thumbnail Design"
+                                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                            <div class="image-overlay">
+                                <i class="fas fa-search-plus"></i>
+                                <span>View Full Size</span>
+                            </div>
+                        </div>
+                        <div class="graphics-info">
+                            <h3>YouTube Thumbnails</h3>
+                            <p>Video thumbnails for football content</p>
+                        </div>
+                    </div>
+
+                    <!-- Graphic 3 -->
+                    <div class="graphics-card">
+                        <div class="graphics-img">
+                            <img src="billie.png" alt="Event Poster Design"
+                                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                            <div class="image-overlay">
+                                <i class="fas fa-search-plus"></i>
+                                <span>View Full Size</span>
+                            </div>
+                        </div>
+                        <div class="graphics-info">
+                            <h3>Tshirt Design</h3>
+                            <p>Billie Ellish Tshirt Design</p>
+                        </div>
+                    </div>
+
+                    <!-- Graphic 4 -->
+                    <div class="graphics-card">
+                        <div class="graphics-img">
+                            <img src="logo.jpeg" alt="Logo Design"
+                                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                            <div class="image-overlay">
+                                <i class="fas fa-search-plus"></i>
+                                <span>View Full Size</span>
+                            </div>
+                        </div>
+                        <div class="graphics-info">
+                            <h3>Logo Designs</h3>
+                            <p>Brand logos and identity elements</p>
+                        </div>
+                    </div>
+
+                    <!-- Graphic 5 -->
+                    <div class="graphics-card">
+                        <div class="graphics-img">
+                            <img src="barca.png" alt="Infographic Design"
+                                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                            <div class="image-overlay">
+                                <i class="fas fa-search-plus"></i>
+                                <span>View Full Size</span>
+                            </div>
+                        </div>
+                        <div class="graphics-info">
+                            <h3>Instagram Post Desig</h3>
+                            <p>FC Barcelona Poster Design</p>
+                        </div>
+                    </div>
+
+                    <!-- Graphic 6 -->
+                    <div class="graphics-card">
+                        <div class="graphics-img">
+                            <img src="lana.png" alt="Social Media Design"
+                                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                            <div class="image-overlay">
+                                <i class="fas fa-search-plus"></i>
+                                <span>View Full Size</span>
+                            </div>
+                        </div>
+                        <div class="graphics-info">
+                            <h3>Tshirt Design</h3>
+                            <p>Lana Del Rey Tshirt Design</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PDF Portfolio Section -->
+                <div class="pdf-upload-section">
+                    <h3>My Design Portfolio (PDF)</h3>
+                    <p>View and download my complete graphics design portfolio with detailed case studies, project
+                        examples, and client work.</p>
+
+                    <!-- PDF Viewer -->
+                    <div class="pdf-viewer-container">
+                        <div style="margin-bottom: 20px; text-align: center;">
+                            <h4 style="color: var(--light-purple); margin-bottom: 10px;">Portfolio Preview</h4>
+                            <p>Scroll through the PDF below or download it for offline viewing</p>
+                        </div>
+
+                        <iframe src="Adobe Scan Oct 15, 2024 (1).pdf" title="Saqhib Design Portfolio">
+                            Your browser does not support PDFs. Please download the PDF to view it.
+                        </iframe>
+
+                        <!-- PDF Options -->
+                        <div
+                            style="margin-top: 20px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                            <a href="Adobe Scan Oct 15, 2024 (1).pdf" download class="cta-button"
+                                style="padding: 12px 25px;">
+                                <i class="fas fa-download"></i> Download PDF
+                            </a>
+                            <button class="cta-button" onclick="openPDFInNewTab()" style="padding: 12px 25px;">
+                                <i class="fas fa-external-link-alt"></i> Open in New Tab
+                            </button>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30px; font-size: 1rem; opacity: 0.8;">
+                        <p><i class="fas fa-info-circle"></i> File size: ~0.97 MB | Last updated: Dec 2025</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p style="font-size: 1.2rem; line-height: 1.7; margin-bottom: 20px;">I'm a passionate video editor
+                        and graphic designer with over 3 years of experience creating engaging visual content. My
+                        expertise lies in crafting compelling football-related videos that tell stories and capture the
+                        emotion of the beautiful game.</p>
+                    <p style="font-size: 1.2rem; line-height: 1.7; margin-bottom: 20px;">I combine technical skills with
+                        creative storytelling to produce content that resonates with audiences. My editing style focuses
+                        on dynamic pacing, seamless transitions, and cinematic effects that elevate the viewing
+                        experience.</p>
+                    <p style="font-size: 1.2rem; line-height: 1.7; margin-bottom: 20px;">When I'm not editing, I'm
+                        usually watching football matches, analyzing player performances, or planning my next YouTube
+                        video for IndianFootyFever.</p>
+
+                    <div class="skills">
+                        <div class="skill-tag">Alight Motion</div>
+                        <div class="skill-tag">Capcut</div>
+                        <div class="skill-tag">Photoshop Android</div>
+                        <div class="skill-tag">Map Animation</div>
+                        <div class="skill-tag">PicsArt</div>
+                        <div class="skill-tag">Color Grading</div>
+                        <div class="skill-tag">Motion Graphics</div>
+                        <div class="skill-tag">Sound Design</div>
+                    </div>
+                </div>
+                <div class="about-visual">
+                    <div class="floating-card" style="width: 100%; height: 400px;">
+                        <div class="card-content">
+                            <h3
+                                style="font-size: 2.5rem; margin-bottom: 10px; background: linear-gradient(to right, #f0e6ff, #a855f7); -webkit-background-clip: text; background-clip: text; color: transparent;">
+                                Editing Philosophy</h3>
+                            <p style="margin-top: 20px; font-size: 1.3rem;">"Every frame should contribute to the story.
+                                The best edits are the ones you don't notice."</p>
+                            <div style="margin-top: 40px; font-size: 5rem;">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+
+            <!-- Contact Information -->
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fab fa-instagram"></i>
+                    <h3>Instagram</h3>
+                    <p>Follow me for updates</p>
+                    <a href="https://www.instagram.com/__saqhib__/" target="_blank">@__saqhib__</a>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <h3>Phone</h3>
+                    <p>Call or WhatsApp</p>
+                    <a href="tel:+918882722257">+91 88827 22257</a>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <h3>Email</h3>
+                    <p>Send me a message</p>
+                    <a href="mailto:saqhibuddin7867@gmail.com">saqhibuddin7867@gmail.com</a>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="videoLink">Your Video Link (Optional)</label>
+                        <input type="url" id="videoLink" placeholder="https://youtube.com/your-video">
+                    </div>
+                    <button type="submit" class="cta-button" style="width: 100%;">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">SAQHIB</div>
+                <div class="social-links">
+                    <a href="https://www.youtube.com/@IndianFootyFever" target="_blank" class="social-link">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="https://www.instagram.com/__saqhib__/" target="_blank" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="mailto:saqhibuddin7867@gmail.com" class="social-link">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="tel:+918882722257" class="social-link">
+                        <i class="fas fa-phone"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Md Saqhibuddin Ahmed. All rights reserved. | Phone: +91 88827 22257 | Email:
+                    saqhibuddin7867@gmail.com</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- COMPLETELY FIXED YouTube API Script -->
+    <script>
+        // Load YouTube IFrame API
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // Store YouTube players and state
+        var players = {};
+        var playerReady = {};
+        var hoverTimeouts = {};
+
+        // YouTube API ready callback
+        function onYouTubeIframeAPIReady() {
+            var iframes = document.querySelectorAll('.youtube-iframe');
+            iframes.forEach(function (iframe) {
+                var videoId = iframe.getAttribute('data-video-id');
+
+                // Skip placeholder IDs
+                if (!videoId || videoId.includes('YOUR_')) {
+                    return;
+                }
+
+                // Create player
+                players[videoId] = new YT.Player(iframe, {
+                    events: {
+                        'onReady': function (event) {
+                            console.log('Player ready for:', videoId);
+                            playerReady[videoId] = true;
+                            // Ensure video starts muted
+                            event.target.mute();
+                        },
+                        'onError': function (event) {
+                            console.log('Error with video:', videoId, event.data);
+                        }
+                    }
+                });
+            });
+
+            // Set up hover listeners after players are ready
+            setTimeout(setupHoverListeners, 1000);
+        }
+
+        // Setup hover autoplay
+        function setupHoverListeners() {
+            document.querySelectorAll('.portrait-video-container, .landscape-video-container').forEach(container => {
+                const iframe = container.querySelector('.youtube-iframe');
+                const videoId = iframe ? iframe.getAttribute('data-video-id') : null;
+                const overlay = container.querySelector('.youtube-overlay');
+
+                // Skip placeholder IDs
+                if (!videoId || videoId.includes('YOUR_')) {
+                    return;
+                }
+
+                // Remove existing listeners
+                container.removeEventListener('mouseenter', handleMouseEnter);
+                container.removeEventListener('mouseleave', handleMouseLeave);
+
+                // Add new listeners
+                container.addEventListener('mouseenter', handleMouseEnter);
+                container.addEventListener('mouseleave', handleMouseLeave);
+
+                function handleMouseEnter() {
+                    // Clear any pending timeout
+                    if (hoverTimeouts[videoId]) {
+                        clearTimeout(hoverTimeouts[videoId]);
+                    }
+
+                    // Set timeout for autoplay (0.5 second delay)
+                    hoverTimeouts[videoId] = setTimeout(() => {
+                        if (players[videoId] && players[videoId].playVideo) {
+                            players[videoId].playVideo();
+                            // Hide overlay smoothly
+                            if (overlay) {
+                                overlay.style.transition = 'opacity 0.3s ease';
+                                overlay.style.opacity = '0';
+                            }
+                        }
+                    }, 500);
+                }
+
+                function handleMouseLeave() {
+                    // Clear timeout if mouse leaves before autoplay triggers
+                    if (hoverTimeouts[videoId]) {
+                        clearTimeout(hoverTimeouts[videoId]);
+                    }
+
+                    // Pause video
+                    if (players[videoId] && players[videoId].pauseVideo) {
+                        players[videoId].pauseVideo();
+                    }
+
+                    // Show overlay again
+                    if (overlay) {
+                        overlay.style.opacity = '1';
+                    }
+                }
+            });
+        }
+
+        // Toggle mute function
+        function toggleMuteVideo(videoId, button) {
+            if (!videoId || videoId.includes('YOUR_')) {
+                alert('Please replace ' + videoId + ' with your actual YouTube video ID');
+                return;
+            }
+
+            if (players[videoId] && players[videoId].isMuted !== undefined) {
+                if (players[videoId].isMuted()) {
+                    players[videoId].unMute();
+                    button.innerHTML = '<i class="fas fa-volume-up"></i> Mute';
+                } else {
+                    players[videoId].mute();
+                    button.innerHTML = '<i class="fas fa-volume-mute"></i> Unmute';
+                }
+            } else {
+                // Fallback - open YouTube
+                window.open('https://youtube.com/watch?v=' + videoId, '_blank');
+            }
+        }
+
+        // PDF Functions
+        function openPDFInNewTab() {
+            window.open('portfolio/saqhib-portfolio.pdf', '_blank');
+        }
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // 3D Hover Effect for Floating Card
+        const floatingCard = document.getElementById('floatingCard');
+
+        floatingCard.addEventListener('mousemove', (e) => {
+            const cardRect = floatingCard.getBoundingClientRect();
+            const cardCenterX = cardRect.left + cardRect.width / 2;
+            const cardCenterY = cardRect.top + cardRect.height / 2;
+
+            const mouseX = e.clientX - cardCenterX;
+            const mouseY = e.clientY - cardCenterY;
+
+            const rotateY = (mouseX / cardRect.width) * 20;
+            const rotateX = -(mouseY / cardRect.height) * 20;
+
+            floatingCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
+        });
+
+        floatingCard.addEventListener('mouseleave', () => {
+            floatingCard.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
+        });
+
+        // Form Submission
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            const videoLink = document.getElementById('videoLink').value;
+
+            let thankYouMsg = `Thank you ${name}! Your message has been sent. I'll get back to you soon at ${email}.`;
+
+            if (videoLink) {
+                thankYouMsg += `\n\nI've noted your video link: ${videoLink}`;
+            }
+
+            alert(thankYouMsg);
+            this.reset();
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.backgroundColor = 'rgba(26, 11, 46, 0.95)';
+                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.3)';
+            } else {
+                header.style.backgroundColor = 'rgba(26, 11, 46, 0.9)';
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // Add click events to graphics images for zoom effect
+        document.querySelectorAll('.graphics-img').forEach(img => {
+            img.addEventListener('click', function () {
+                const imgSrc = this.querySelector('img').src;
+                const imgAlt = this.querySelector('img').alt;
+
+                const modal = document.createElement('div');
+                modal.style.position = 'fixed';
+                modal.style.top = '0';
+                modal.style.left = '0';
+                modal.style.width = '100%';
+                modal.style.height = '100%';
+                modal.style.backgroundColor = 'rgba(0,0,0,0.9)';
+                modal.style.zIndex = '2000';
+                modal.style.display = 'flex';
+                modal.style.justifyContent = 'center';
+                modal.style.alignItems = 'center';
+                modal.style.cursor = 'pointer';
+
+                const modalImg = document.createElement('img');
+                modalImg.src = imgSrc;
+                modalImg.alt = imgAlt;
+                modalImg.style.maxWidth = '90%';
+                modalImg.style.maxHeight = '90%';
+                modalImg.style.objectFit = 'contain';
+                modalImg.style.borderRadius = '10px';
+                modalImg.style.boxShadow = '0 20px 50px rgba(0,0,0,0.5)';
+
+                modal.appendChild(modalImg);
+                document.body.appendChild(modal);
+
+                modal.addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                });
+
+                document.addEventListener('keydown', function closeModal(e) {
+                    if (e.key === 'Escape') {
+                        document.body.removeChild(modal);
+                        document.removeEventListener('keydown', closeModal);
+                    }
+                });
+            });
+        });
+
+        // Run on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            // Check if running locally
+            if (window.location.protocol === 'file:') {
+                console.log('Running locally - YouTube videos will work after uploading to a server');
+            }
+        });
+    </script>
+</body>
+
+</html>
